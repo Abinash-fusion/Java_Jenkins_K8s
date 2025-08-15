@@ -3,7 +3,7 @@ pipeline {
     tools {
         nodejs 'NodeJS'
     }
-    enviourment {
+    environment {
         DOCKER_HUB_REPO = 'abinashpati/java_jenkins_k8s'
     }
     stages {
