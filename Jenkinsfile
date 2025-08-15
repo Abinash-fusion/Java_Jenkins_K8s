@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         DOCKER_HUB_REPO = 'abinashpati/java_jenkins_k8s'
+		DOCKER_HUB_CREDENTIAL_ID='gitops-dockerhub'
     }
     stages {
         stage('Checkout GitHub') {
@@ -26,20 +27,24 @@ pipeline {
             steps {
                 script {
                     echo 'building docker Image...'
-                    docker.build("${DOCKER_HUB_REPO}:latest")
+                    dockerImage=docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
         }
         stage('Trivy Scan') {
             steps {
                 echo 'scanning docker Image with Trivy...'
-		sh 'trivy image --no-progress --format json -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
+                //sh 'trivy image --no-progress --format json -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
+				sh 'trivy image --no-progress --skip-update --format json -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
             }
         }
         stage('Push Image to DockerHub') {
             steps {
                 script {
                     echo 'pushing docker Image to DockerHub...'
+					docker.withRegistry("http://registry.hub.docker.com","${DOCKER_HUB_CREDENTIAL_ID}"){
+					dockerImage.push('latest')
+					}
                 }
             }
         }
