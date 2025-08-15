@@ -48,11 +48,7 @@ pipeline {
                 }
             }
         }
-        stage('Install ArgoCD CLI') {
-            steps {
-                sh 'echo "Installing argoCD cli..."'
-            }
-        }
+        
 		stage('Install Kubectl & ArgoCD CLI'){
 			steps {
 				script { // Use a script block to execute Groovy code
@@ -66,14 +62,14 @@ pipeline {
             def argocdAdminPassword = sh(script: 'kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d', returnStdout: true).trim()
 
             // Pass the variables to the shell script
-            sh """
+            sh '
                 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
                 chmod +x kubectl
                 mv kubectl /usr/local/bin/kubectl
                 curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
                 chmod +x /usr/local/bin/argocd
                 argocd login ${nodeIp}:${nodePort} --username admin --password Aa#80858086 --insecure
-            """
+            '
 			}
 		}
     }
