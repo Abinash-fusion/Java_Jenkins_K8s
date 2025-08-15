@@ -36,4 +36,5 @@ pipeline {
                                 sh echo 'Installing argoCD cli...'
                             }
 							}
-
+}
+}
