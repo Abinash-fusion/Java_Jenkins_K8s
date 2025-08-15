@@ -33,7 +33,7 @@ pipeline {
         stage('Trivy Scan') {
             steps {
                 echo 'scanning docker Image with Trivy...'
-		sh 'trivy image --severity HIGH,CRITICAL --no-progress --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO:latest}'
+		sh 'trivy image --no-progress --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
             }
         }
         stage('Push Image to DockerHub') {
