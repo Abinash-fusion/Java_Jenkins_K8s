@@ -8,7 +8,7 @@ pipeline {
         }
         stage('installing node dependencies') {
             steps {
-                sh  ' ' '
+                sh 
 				   echo 'Installing node dependencies...'
             }
 			}
