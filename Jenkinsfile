@@ -8,7 +8,7 @@ pipeline {
         }
         stage('installing node dependencies') {
             steps {
-		'echo 'Installing node dependencies...'
+		echo 'Installing node dependencies...'
 				   
             }
             stage('Docker Image Building') {
