@@ -3,6 +3,9 @@ pipeline {
     tools {
         nodejs 'NodeJS'
     }
+    enviourment {
+        DOCKER_HUB_REPO = 'abinashpati/java_jenkins_k8s'
+    }
     stages {
         stage('Checkout GitHub') {
             steps {
@@ -18,6 +21,7 @@ pipeline {
             steps {
                 script {
                     echo 'building docker Image...'
+                    docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
         }
