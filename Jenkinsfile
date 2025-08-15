@@ -32,7 +32,7 @@ pipeline {
 						}
                         stage('Install ArgoCD CLI') {
                             steps {
-                                sh echo 'Installing argoCD cli...'
+                                sh 'echo "Installing argoCD cli..."'
                             }
 							}
 }
