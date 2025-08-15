@@ -62,6 +62,11 @@ pipeline {
 				mv kubectl /usr/local/bin/kubectl
 				curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 				chmod +x /usr/local/bin/argocd
+				def nodePort = sh(script: 'kubectl get svc argocd-server -n argocd -o=jsonpath="{.spec.ports[?(@.name==\\"https\\")].nodePort}"', returnStdout: true).trim()
+				def nodeIp = sh(script: 'minikube ip', returnStdout: true).trim()
+				def argocdAdminPassword = sh(script: 'kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d', returnStdout: true).trim()
+				sh "argocd login ${nodeIp}:${nodePort} --username admin --password Aa#80858086 --insecure"
+				
 				'''
 			}
 		}
