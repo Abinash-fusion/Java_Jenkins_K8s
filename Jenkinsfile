@@ -17,6 +17,11 @@ pipeline {
                 sh 'echo "npm install..."'
             }
         }
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean package' // This will create the target directory and the JAR
+            }
+        }
         stage('Docker Image Building') {
             steps {
                 script {
