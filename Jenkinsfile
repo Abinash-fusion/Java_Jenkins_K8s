@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'NodeJS'
+    }
     stages {
         stage('Checkout GitHub') {
             steps {
@@ -8,32 +11,32 @@ pipeline {
         }
         stage('installing node dependencies') {
             steps {
-				   sh 'echo "Installing node dependencies..."'
+                sh 'echo "npm install..."'
             }
-			}
-            stage('Docker Image Building') {
-                steps {
-                    script {
-                        echo 'building docker Image...'
-                    }
+        }
+        stage('Docker Image Building') {
+            steps {
+                script {
+                    echo 'building docker Image...'
                 }
-				}
-                stage('Trivy Scan') {
-                    steps {
-                            echo 'scanning docker Image with Trivy...'
-                    }
-					}
-                    stage('Push Image to DockerHub') {
-                        steps {
-                            script {
-                                echo 'pushing docker Image to DockerHub...'
-                            }
-                        }
-						}
-                        stage('Install ArgoCD CLI') {
-                            steps {
-                                sh 'echo "Installing argoCD cli..."'
-                            }
-							}
-}
+            }
+        }
+        stage('Trivy Scan') {
+            steps {
+                echo 'scanning docker Image with Trivy...'
+            }
+        }
+        stage('Push Image to DockerHub') {
+            steps {
+                script {
+                    echo 'pushing docker Image to DockerHub...'
+                }
+            }
+        }
+        stage('Install ArgoCD CLI') {
+            steps {
+                sh 'echo "Installing argoCD cli..."'
+            }
+        }
+    }
 }
