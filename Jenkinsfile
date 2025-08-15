@@ -33,6 +33,9 @@ pipeline {
         stage('Trivy Scan') {
             steps {
                 echo 'scanning docker Image with Trivy...'
+                sh '''
+  			trivy --severity HIGH,CRITICAL --cache-dir ${WORKSPACE}/.trivy-cache --no-progress --format table -o trivyFSScanReport.html image ${IMAGE_NAME}:${IMAGE_TAG}
+     		'''
             }
         }
         stage('Push Image to DockerHub') {
