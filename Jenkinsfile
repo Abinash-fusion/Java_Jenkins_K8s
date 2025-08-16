@@ -53,8 +53,9 @@ pipeline {
         script { // Use a script block to execute Groovy code
 		docker.image('argoproj/argocd:latest').inside {
 		sh 'argocd version'
+		sh 'argocd version'
+                sh 'argocd login localhost:8080 --insecure --plaintext'
 	}
-		sh 'argocd login localhost:8080 --insecure --plaintext' 
         	
 }
     }
