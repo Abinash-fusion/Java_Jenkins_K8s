@@ -67,7 +67,7 @@ pipeline {
                 mv kubectl /usr/local/bin/kubectl
                 curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
                 chmod +x /usr/local/bin/argocd
-                argocd login ${nodeIp}:${nodePort} --username admin --password '${ARGOCD_PASSWORD}' --insecure
+                argocd login ${nodeIp}:${nodePort} --username admin --password 'Aa#80858086' --insecure
             """
         }
     }
