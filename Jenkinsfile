@@ -51,14 +51,29 @@ pipeline {
        stage('Install ArgoCD CLI'){
     steps {
         script { // Use a script block to execute Groovy code
-		sh """
-		echo 'installing argocd CLI...'
-                curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-                sudo mv argocd /usr/local/bin/argocd
-		chmod +x /usr/local/bin/argocd
-            """
-        }
+		docker.image('argoproj/argocd:latest').inside {
+		sh 'argocd version'
+	}
+		sh 'argocd login localhost:8080 --insecure --plaintext' 
+        	
+}
     }
 } 
+stage('Sync Argo CD Application') {
+            steps {
+                script {
+                    // Replace 'my-app' with the name of your Argo CD application
+                    sh 'argocd app sync my-app'
+                }
+            }
+        }
+
+        stage('Get Argo CD Application Status') {
+            steps {
+                script {
+                    sh 'argocd app get my-app'
+                }
+            }
+        }
 }
 }
