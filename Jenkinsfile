@@ -58,22 +58,6 @@ pipeline {
         	
 }
     }
+}
+}
 } 
-stage('Sync Argo CD Application') {
-            steps {
-                script {
-                    // Replace 'my-app' with the name of your Argo CD application
-                    sh 'argocd app sync my-app'
-                }
-            }
-        }
-
-        stage('Get Argo CD Application Status') {
-            steps {
-                script {
-                    sh 'argocd app get my-app'
-                }
-            }
-        }
-}
-}
