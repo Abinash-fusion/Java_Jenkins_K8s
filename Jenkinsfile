@@ -55,10 +55,6 @@ pipeline {
 		sh 'argocd version'
 		sh 'argocd version'
                 sh 'argocd login localhost:8080 --insecure --plaintext'
-	}
-        	
-}
-    }
-}
+	
 }
 } 
